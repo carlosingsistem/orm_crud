@@ -63,7 +63,33 @@ def query_products():
         else:
             print("📢 Producto No Encontrado!")
 
+def update_product():
+    with app.app_context():
+        id = int(input("ID: "))
+        product = Product.query.filter_by(id=id).first()
+        if product:
+            name = input("Nombre del producto: ").strip()
+            price = input("Precio: ").strip()
+            stock = input("Stock (Enter para valor por defecto 0): ").strip()
+            if name and price and stock:
+                product.name = name
+                product.price = float(price)
+                product.stock = int(stock)
+                
+                db.session.commit()
+                print("✍️ Producto Actualizado Exitosamente!")
+
+            product.name = name
+            product.price = float(price)
+            
+            db.session.commit()
+            print("✍️ Producto Actualizado Exitosamente!")
+            
+        else:
+            print("📢 Producto No Encontrado!")
+            
 if __name__ == "__main__":
     init_database()
     insert_product()
     query_products()
+    update_product()
