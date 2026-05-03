@@ -87,9 +87,22 @@ def update_product():
             
         else:
             print("📢 Producto No Encontrado!")
+
+def delete_product():
+    with app.app_context():
+        
+        id = int(input("ID: "))
+        product = Product.query.filter_by(id=id).first()
+        
+        if product:
+            db.session.delete(product)
+            print("✍️ Producto Eliminado Exitosamente!")
+        else:
+            print("📢 Producto No Encontrado!")
             
 if __name__ == "__main__":
     init_database()
     insert_product()
     query_products()
     update_product()
+    delete_product()
