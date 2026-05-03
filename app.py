@@ -40,7 +40,30 @@ def insert_product():
                     
         product = Product(name=name, price=float(price))
         print("✨ Producto insertado con valor por defecto (0) exitosamente!")
+        
+def query_products():
+    with app.app_context():
+        # Todos los productos
+        products = Product.query.all()
+        c = 1
+        for pro in products:
+            print("----------------------------------------------")
+            print(f"\t\tProducto N°{c}")
+            print(pro)
+            print("----------------------------------------------")
+            c += 1
+        # Productos que tengan stock 0
+        products_filter = Product.query.filter(Product.stock == 0).all()
+        # Buscar por id
+        product = Product.query.filter_by(id=2).first()
+        if product:
+            print("----------------------------------------------")
+            print("Product: ", product)
+            print("----------------------------------------------")
+        else:
+            print("📢 Producto No Encontrado!")
 
 if __name__ == "__main__":
     init_database()
     insert_product()
+    query_products()
